@@ -1,4 +1,4 @@
-package packages
+package withdrawals
 
 import (
 	"encoding/json"
@@ -13,8 +13,8 @@ import (
 
 func MainCommand(client *kaj_log_activities_sdk.Client) *cobra.Command {
 	event := &cobra.Command{}
-	event.Use = "package"
-	event.Short = "package [command]"
+	event.Use = "withdrawal"
+	event.Short = "withdrawal [command]"
 	event.AddCommand(search(client))
 	return event
 }
@@ -22,7 +22,7 @@ func MainCommand(client *kaj_log_activities_sdk.Client) *cobra.Command {
 func search(client *kaj_log_activities_sdk.Client) *cobra.Command {
 	// client.Packages.Search()
 	search := &cobra.Command{}
-	search.Flags().StringP("search", "s", "", "Package ID | OrderID")
+	search.Flags().StringP("search", "s", "", "Withdrawal ID | TrxID")
 	search.Flags().StringP("detail", "d", "", "Show Detail")
 	search.Use = "search"
 	search.Short = "search"
@@ -31,16 +31,16 @@ func search(client *kaj_log_activities_sdk.Client) *cobra.Command {
 		if err != nil {
 			log.Fatalf("Argument search: %v", err)
 		}
-		data, err := client.Packages.Search(search)
+		data, err := client.Withdrawals.Search(search)
 		if err != nil {
 			log.Fatalf("Fecth data error: %v", err)
 		}
 
 		headerFmt := color.New(color.FgGreen, color.Underline).SprintfFunc()
 		columnFmt := color.New(color.FgYellow).SprintfFunc()
-		tbl := table.New("Source", "PackageID", "OrderID")
+		tbl := table.New("Source", "WithdrawalID", "Ref Number")
 		tbl.WithHeaderFormatter(headerFmt).WithFirstColumnFormatter(columnFmt)
-		tbl.AddRow(data.Source, data.PackageID, data.OrderID)
+		tbl.AddRow(data.Source, data.WithdrawalID, data.RefNum)
 		tbl.Print()
 		tblHistory := table.New("Event Tracking ID", "Event Name")
 		tblHistory.WithHeaderFormatter(headerFmt).WithFirstColumnFormatter(columnFmt)
