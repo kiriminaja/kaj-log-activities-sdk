@@ -12,8 +12,8 @@ type HistoryData struct {
 	Data            []map[string]interface{} `json:"data"`
 }
 type ResponseSearch struct {
-	Source    string        `json:"source"`
-	PackageID int           `json:"package_id"`
-	OrderID   string        `json:"order_id"`
-	History   []HistoryData `json:"history"`
+	Source       string        `json:"source"`
+	WithdrawalID int           `json:"withdrawal_id"`
+	RefNum       string        `json:"ref_num"`
+	History      []HistoryData `json:"history"`
 }

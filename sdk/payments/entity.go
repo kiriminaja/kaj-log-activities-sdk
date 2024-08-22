@@ -13,7 +13,7 @@ type HistoryData struct {
 }
 type ResponseSearch struct {
 	Source    string        `json:"source"`
-	PackageID int           `json:"package_id"`
-	OrderID   string        `json:"order_id"`
+	PaymentID int           `json:"payment_id"`
+	TrxID     string        `json:"trx_id"`
 	History   []HistoryData `json:"history"`
 }
