@@ -5,6 +5,9 @@ import (
 	"errors"
 	"io"
 	"net/http"
+	"net/url"
+
+	"github.com/kiriminaja/kaj-log-activities-sdk/sdk/presentation"
 )
 
 // handler ...
@@ -21,9 +24,22 @@ func (request *handler) RAW(method, url string, body io.Reader) (*http.Request, 
 }
 
 // GET request type get
-func (request *handler) GET(url string, header map[string]string) ([]byte, error) {
-	var result []byte
-	req, err := http.NewRequest("GET", url, nil)
+func (request *handler) GET(urlBase string, header, params map[string]string) (presentation.Response, error) {
+	var result presentation.Response
+	// Create URL object
+	u, err := url.Parse(urlBase)
+	if err != nil {
+		return result, err
+	}
+
+	// Add query parameters to URL
+	q := u.Query()
+	for key, value := range params {
+		q.Add(key, value)
+	}
+	u.RawQuery = q.Encode()
+
+	req, err := http.NewRequest("GET", u.String(), nil)
 	req.Header.Set("Content-Type", "application/json")
 	if err != nil {
 		return result, err
@@ -47,12 +63,14 @@ func (request *handler) GET(url string, header map[string]string) ([]byte, error
 	if resp.StatusCode != 200 {
 		return result, errors.New(string(body))
 	}
-	return body, nil
+	result.Cast(body, &result)
+
+	return result, nil
 }
 
 // POST request type post
-func (request *handler) POST(url string, header map[string]string, payload []byte) ([]byte, error) {
-	var result []byte
+func (request *handler) POST(url string, header map[string]string, payload []byte) (presentation.Response, error) {
+	var result presentation.Response
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(payload))
 	req.Header.Set("Content-Type", "application/json")
 	if err != nil {
@@ -77,12 +95,13 @@ func (request *handler) POST(url string, header map[string]string, payload []byt
 	if resp.StatusCode != 200 {
 		return result, errors.New(string(body))
 	}
-	return body, nil
+	result.Cast(body, &result)
+	return result, nil
 }
 
 // WithBasicPOST request type post
-func (request *handler) WithBasicPOST(url string, header map[string]string, payload []byte, username, password string) ([]byte, error) {
-	var result []byte
+func (request *handler) WithBasicPOST(url string, header map[string]string, payload []byte, username, password string) (presentation.Response, error) {
+	var result presentation.Response
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(payload))
 	req.Header.Set("Content-Type", "application/json")
 	req.SetBasicAuth(username, password)
@@ -108,12 +127,13 @@ func (request *handler) WithBasicPOST(url string, header map[string]string, payl
 	if resp.StatusCode != 200 {
 		return result, errors.New(string(body))
 	}
-	return body, nil
+	result.Cast(body, &result)
+	return result, nil
 }
 
 // PUT request type post
-func (request *handler) PUT(url string, header map[string]string, payload []byte) ([]byte, error) {
-	var result []byte
+func (request *handler) PUT(url string, header map[string]string, payload []byte) (presentation.Response, error) {
+	var result presentation.Response
 	req, err := http.NewRequest("PUT", url, bytes.NewBuffer(payload))
 	req.Header.Add("Content-Type", "application/json")
 	if err != nil {
@@ -136,12 +156,13 @@ func (request *handler) PUT(url string, header map[string]string, payload []byte
 	if (resp.StatusCode != 200) && (resp.StatusCode != 201) {
 		return result, errors.New(string(body))
 	}
-	return body, nil
+	result.Cast(body, &result)
+	return result, nil
 }
 
 // DELETE request type get
-func (request *handler) DELETE(url string, header map[string]string) ([]byte, error) {
-	var result []byte
+func (request *handler) DELETE(url string, header map[string]string) (presentation.Response, error) {
+	var result presentation.Response
 	req, err := http.NewRequest("DELETE", url, nil)
 	if err != nil {
 		return result, err
@@ -165,5 +186,6 @@ func (request *handler) DELETE(url string, header map[string]string) ([]byte, er
 	if resp.StatusCode != 200 {
 		return result, errors.New(string(body))
 	}
-	return body, nil
+	result.Cast(body, &result)
+	return result, nil
 }

@@ -27,24 +27,17 @@ func (e *eventCase) Upsert(event string, data map[string]interface{}) (map[strin
 	if err != nil {
 		return nil, err
 	}
-	var result map[string]interface{}
 	response, err := e.request.POST(e.endpoint, map[string]string{}, body)
 	if err != nil {
-		return result, err
+		return response.Data, err
 	}
-	err = json.Unmarshal(response, &result)
-	return result, err
+	return response.Data, err
 }
 
 func (e *eventCase) List() (map[string]interface{}, error) {
-	var result Response
-	data, err := e.request.GET(e.endpoint, nil)
+	data, err := e.request.GET(e.endpoint, nil, nil)
 	if err != nil {
 		return nil, err
 	}
-	err = result.Cast(data, &result)
-	if err != nil {
-		return result.Data, err
-	}
-	return result.Data, nil
+	return data.Data, nil
 }
