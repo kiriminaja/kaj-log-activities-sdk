@@ -1,8 +1,8 @@
 package kaj_log_activities_sdk
 
 import (
-	"github.com/kiriminaja/kaj-log-activities-sdk/event"
-	"github.com/kiriminaja/kaj-log-activities-sdk/requester"
+	"github.com/kiriminaja/kaj-log-activities-sdk/sdk/event"
+	"github.com/kiriminaja/kaj-log-activities-sdk/sdk/requester"
 )
 
 type Client struct {
