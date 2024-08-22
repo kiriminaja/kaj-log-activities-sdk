@@ -7,8 +7,8 @@ import (
 
 type Client struct {
 	cfg     Config
-	events  event.EventContract
 	request requester.Contract
+	Events  event.EventContract
 }
 
 func NewClient(cfg Config) *Client {
@@ -16,7 +16,7 @@ func NewClient(cfg Config) *Client {
 	return &Client{
 		cfg:     cfg,
 		request: request,
-		events: event.NewEvent(event.Config{
+		Events: event.NewEvent(event.Config{
 			URL: cfg.URL,
 		}, request),
 	}
