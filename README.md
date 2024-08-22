@@ -42,11 +42,34 @@ Flags:
 Use " [command] --help" for more information about a command.
 
 ```
-### Packages Command
+### Withdrawal Command
 ```
-# kaj-log withdrawal search -s 11429683 -d WITHDRAWAL_2024082203595068904804
-Source             WithdrawalID  Ref Number      
-kaj-prd-core-srvc  11429683      OID-7951969212  
-Event Tracking ID                  Event Name    
-WITHDRAWAL_2024082203595068904804  disbursement 
+withdrawal [command]
+
+Usage:
+   withdrawal [command]
+
+Available Commands:
+  search      search
+
+Flags:
+  -h, --help   help for withdrawal
+
+Use " withdrawal [command] --help" for more information about a command.
+```
+
+### Package Command
+```
+package [command]
+
+Usage:
+   package [command]
+
+Available Commands:
+  search      search
+
+Flags:
+  -h, --help   help for package
+
+Use " package [command] --help" for more information about a command.
 ```
