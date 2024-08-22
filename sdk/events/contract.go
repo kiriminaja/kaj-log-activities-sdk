@@ -1,4 +1,4 @@
-package event
+package events
 
 type EventContract interface {
 	Upsert(event string, data map[string]interface{}) (map[string]interface{}, error)

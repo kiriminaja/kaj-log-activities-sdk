@@ -1,4 +1,4 @@
-package packages
+package payments
 
 import (
 	"encoding/json"
@@ -6,19 +6,19 @@ import (
 	"github.com/kiriminaja/kaj-log-activities-sdk/sdk/requester"
 )
 
-type packageCase struct {
+type paymentsCase struct {
 	request  requester.Contract
 	endpoint string
 }
 
-func NewPackage(cfg Config, request requester.Contract) PackageContract {
-	return &packageCase{
+func NewPayment(cfg Config, request requester.Contract) PaymentsContract {
+	return &paymentsCase{
 		request:  request,
-		endpoint: cfg.URL + "/ex/v1/package",
+		endpoint: cfg.URL + "/ex/v1/payment",
 	}
 }
 
-func (p *packageCase) Search(search string) (*ResponseSearch, error) {
+func (p *paymentsCase) Search(search string) (*ResponseSearch, error) {
 	enpoint := p.endpoint + "/search"
 	params := map[string]string{
 		"search": search,

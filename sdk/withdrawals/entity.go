@@ -1,4 +1,4 @@
-package packages
+package withdrawals
 
 type Config struct {
 	URL string `json:"url"`

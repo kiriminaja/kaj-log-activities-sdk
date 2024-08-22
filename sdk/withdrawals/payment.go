@@ -1,4 +1,4 @@
-package packages
+package withdrawals
 
 import (
 	"encoding/json"
@@ -6,19 +6,19 @@ import (
 	"github.com/kiriminaja/kaj-log-activities-sdk/sdk/requester"
 )
 
-type packageCase struct {
+type withdrawalCase struct {
 	request  requester.Contract
 	endpoint string
 }
 
-func NewPackage(cfg Config, request requester.Contract) PackageContract {
-	return &packageCase{
+func NewWithdrawal(cfg Config, request requester.Contract) WithdrawalContract {
+	return &withdrawalCase{
 		request:  request,
-		endpoint: cfg.URL + "/ex/v1/package",
+		endpoint: cfg.URL + "/ex/v1/withdrawal",
 	}
 }
 
-func (p *packageCase) Search(search string) (*ResponseSearch, error) {
+func (p *withdrawalCase) Search(search string) (*ResponseSearch, error) {
 	enpoint := p.endpoint + "/search"
 	params := map[string]string{
 		"search": search,

@@ -1,5 +1,5 @@
-package packages
+package payments
 
-type PackageContract interface {
+type PaymentsContract interface {
 	Search(search string) (*ResponseSearch, error)
 }

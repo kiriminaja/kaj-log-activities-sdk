@@ -1,4 +1,4 @@
-package event
+package events
 
 //go:generate easytags $GOFILE json
 

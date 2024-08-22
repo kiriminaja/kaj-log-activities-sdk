@@ -1,4 +1,4 @@
-package packages
+package payments
 
 type Config struct {
 	URL string `json:"url"`
